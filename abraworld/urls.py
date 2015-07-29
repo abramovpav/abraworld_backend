@@ -22,34 +22,18 @@
 
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
+from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
 
-# Serializers define the API representation.
-from blog.models import Article
-
-
-class ArticleSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Article
-        fields = ('title', 'body')
-
-
-# ViewSets define the view behavior.
-class ArticlesViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'articles', ArticlesViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^', include(router.urls)),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('blog.urls')),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
