@@ -1,10 +1,7 @@
-from django.conf.urls import patterns, url
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls import url
 from blog import views
 
 urlpatterns = [
-    url(r'^articles/$', views.articles_list),
-    url(r'^articles/(?P<pk>[0-9]+)$', views.article_detail),
+    url(r'^articles/$', views.ArticlesList.as_view()),
+    url(r'^articles/(?P<pk>[0-9]+)$', views.ArticleDetail.as_view()),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
