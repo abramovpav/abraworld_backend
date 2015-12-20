@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework import status, mixins, generics
+from rest_framework import status, mixins, generics, permissions
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from profiles.serializers import UserSerializer
@@ -50,10 +51,26 @@ from profiles.serializers import UserSerializer
 #         return self.partial_update(request, *args, **kwargs)
 
 class UsersList(generics.ListAPIView):
+    authentication_classes = (SessionAuthentication, )
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = UserSerializer
+
+
+class CurrentUserDetail(generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_anonymous():
+            return Response({'username': ''})
+        serializer = self.serializer_class(user)
+        return Response(serializer.data)
