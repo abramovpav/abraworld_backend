@@ -10,10 +10,13 @@ admin.autodiscover()
 urlpatterns = [
     # url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('blog.urls')),
     url(r'^', include('profiles.urls')),
     url(r'^', include('login.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] \
+              + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
+              # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns = format_suffix_patterns(urlpatterns)
