@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 
-# Create your models here.
-
+# @python_2_unicode_compatible
 class Article(models.Model):
     title = models.CharField(max_length=30)
     body = models.TextField(max_length=255)
