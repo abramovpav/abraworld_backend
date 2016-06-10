@@ -20,4 +20,3 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^music/', include('music_library.urls')),
 ]
->>>>>>> a424188741ba7627b2361b302dd8cf8e5b709319

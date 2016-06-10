@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Album #{{ album.id }}</title>
+</head>
+<body>
+<p>Album #{{ album.id }}</p>
+<p>Name: {{ album.name }}</p>
+<p>Publish Date: {{ album.publish_at }}</p>
+<p>Trucks:</p>
+<ul>
+{% for track in album.track_set.all %}
+    <li><a href="#">{{ track.name }}.{{ track.extension }}</a></li>
+{% endfor %}
+</ul>
+
+<h4>Add Track:</h4>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'music:add_track' album.id %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="name" value="" /><br/>
+    <input type="text" name="extension" value="" /><br/>
+    <input type="submit" value="Add" />
+</form>
+
+</body>
+</html>
