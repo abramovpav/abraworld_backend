@@ -18,7 +18,11 @@ class NameMixin(object):
             return self.name
 
     def was_published_recently(self):
-        return self.publish_at >= datetime.utcnow() - timedelta(days=1)
+        return datetime.utcnow().date() >= self.publish_at >= (datetime.utcnow() - timedelta(days=1)).date()
+
+    was_published_recently.admin_order_field = 'publish_at'
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Published recently?'
 
 
 @python_2_unicode_compatible

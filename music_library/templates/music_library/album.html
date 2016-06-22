@@ -1,8 +1,10 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Album #{{ album.id }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'music_library/style.css' %}" />
 </head>
 <body>
 <p>Album #{{ album.id }}</p>
